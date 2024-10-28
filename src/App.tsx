@@ -1,55 +1,91 @@
 import { useState } from 'react'
+import axios from 'axios'
 import './App.css'
 
+interface Book {
+  title: string;
+  authors: string[];
+  categories: string[];
+  thumbnail: string;
+}
+
 function App() {
-  const [count, setCount] = useState(0)
+  const [search, setSearch] = useState<string>("")
+  const [books, setBooks] = useState<Book[]>([])
+
+  async function performSearch() {
+    axios.get("https://www.googleapis.com/books/v1/volumes", {
+      params: {
+        q: search
+      }
+    })
+      .then(function (response) {
+        // handle success
+        const items: [] = response.data.items;
+        const books: Book[] = [];
+        items.forEach(({ volumeInfo }) => {
+          const { title, authors, categories } = volumeInfo;
+          const { thumbnail } = volumeInfo['imageLinks']
+          books.push({ title, authors, categories, thumbnail })
+        })
+        setBooks(books)
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function () {
+        // always executed
+      });
+  }
 
   return (
     <div className="card bg-base-100 shadow-xl m-5">
       <div className="card-body">
-      <div className="grid grid-cols-4 gap-4">
-        <div className='grid col-span-3'>
-          <input type="text" placeholder="Type here" className="input input-bordered w-full" />
+        <div className="grid grid-cols-4 gap-4">
+          <div className='grid col-span-3'>
+            <input
+              type="text"
+              value={search}
+              onChange={(event) => {
+                const value = event.target.value;
+                setSearch(value);
+              }}
+              placeholder="Search here"
+              className="input input-bordered w-full"
+            />
+          </div>
+          <div className='grid col-span-1'>
+            <button className="btn btn-primary" onClick={performSearch}>
+              Search
+            </button>
+          </div>
         </div>
-        <div className='grid col-span-1'>
-        <button className="btn btn-primary" onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        </div>
-      </div>
-      <table className="table">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Job</th>
-            <th>Favorite Color</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/* row 1 */}
-          <tr>
-            <th>1</th>
-            <td>Cy Ganderton</td>
-            <td>Quality Control Specialist</td>
-            <td>Blue</td>
-          </tr>
-          {/* row 2 */}
-          <tr>
-            <th>2</th>
-            <td>Hart Hagerty</td>
-            <td>Desktop Support Technician</td>
-            <td>Purple</td>
-          </tr>
-          {/* row 3 */}
-          <tr>
-            <th>3</th>
-            <td>Brice Swyre</td>
-            <td>Tax Accountant</td>
-            <td>Red</td>
-          </tr>
-        </tbody>
-      </table>
+        <table className="table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Title</th>
+              <th>Authors</th>
+              <th>Categories</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              books.map((book, index) => {
+                return (<tr key={index}>
+                  <div className="mask mask-squircle h20 w-12">
+                    <img
+                      src={book.thumbnail}
+                      alt={book.title} />
+                  </div>
+                  <th>{book.title}</th>
+                  <td>{book.authors?.join(", ")}</td>
+                  <td>{book.categories?.join(", ")}</td>
+                </tr>)
+              })}
+          </tbody>
+        </table>
       </div>
     </div>
   )
