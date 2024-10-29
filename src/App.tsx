@@ -34,31 +34,26 @@ function App() {
             </button>
           </div>
         </div>
-        <table className="table">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Title</th>
-              <th>Authors</th>
-              <th>Categories</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              books.map((book, index) => {
-                return (<tr key={index}>
-                  <div className="mask mask-squircle h20 w-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+          {
+            books.map((book) => {
+              return (
+                <div className="card shadow-xl">
+                  <figure style={{ maxHeight: 250, overflow: 'hidden' }}>
                     <img
                       src={book.thumbnail}
-                      alt={book.title} />
+                      alt={book.title}
+                      style={{ width: '100%' }} />
+                  </figure>
+                  <div className="card-body p-4">
+                    <h2 className="card-title">{book.title}</h2>
+                    <p>{book.authors?.join(", ")}</p>
+                    <p>{book.categories?.join(", ")}</p>
                   </div>
-                  <th>{book.title}</th>
-                  <td>{book.authors?.join(", ")}</td>
-                  <td>{book.categories?.join(", ")}</td>
-                </tr>)
-              })}
-          </tbody>
-        </table>
+                </div>
+              )
+            })}
+        </div>
       </div>
     </div>
   )
