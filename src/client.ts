@@ -9,8 +9,8 @@ export async function getBooks(search: string, pagination: Pagination) {
     params: {
       q: search,
       projection: "lite",
-      maxResults: pagination.pageSize,
-      startIndex: pagination.page * pagination.pageSize,
+      maxResults: pagination.maxResults,
+      startIndex: pagination.startIndex,
     },
   });
 
@@ -18,7 +18,7 @@ export async function getBooks(search: string, pagination: Pagination) {
     throw Error(response.data);
   }
 
-  const count: number = response.data.totalItems;
+  const totalItems: number = response.data.totalItems;
   const items: Schema$Volume[] = response.data.items;
   const books: Book[] = items.map(({ id, volumeInfo }) => {
     return {
@@ -31,7 +31,7 @@ export async function getBooks(search: string, pagination: Pagination) {
   });
 
   return {
-    count,
+    totalItems,
     books,
   };
 }

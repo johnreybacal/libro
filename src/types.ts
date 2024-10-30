@@ -7,7 +7,7 @@ export interface Book {
 }
 
 export interface Pagination {
-  page: number;
-  pageSize: number;
-  count?: number;
+  startIndex: number;
+  maxResults: number;
+  totalItems?: number;
 }

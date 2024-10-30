@@ -7,29 +7,26 @@ function App() {
   const [search, setSearch] = useState<string>("")
   const [currentSearch, setCurrentSearch] = useState<string>("")
   const [books, setBooks] = useState<Book[]>([])
-  const [pagination, setPagination] = useState<Pagination>({ page: 0, pageSize: 12 })
-  const canLoadMore = useMemo(() => {
-    console.log(pagination, (pagination.page * pagination.pageSize) < (pagination.count ?? 0))
-    return (pagination.page * pagination.pageSize) < (pagination.count ?? 0)
-  }, [pagination])
+  const [pagination, setPagination] = useState<Pagination>({ startIndex: 0, maxResults: 12 })
+  const canLoadMore = useMemo(() => (pagination.startIndex * pagination.maxResults) < (pagination.totalItems ?? 0), [pagination])
 
   async function performSearch() {
     setCurrentSearch(search)
-    pagination.page = 0
-    const { count, books } = await getBooks(search, pagination)
+    pagination.startIndex = 0
+    const { totalItems, books } = await getBooks(search, pagination)
     setPagination({
       ...pagination,
-      count
+      totalItems
     })
     setBooks(books)
   }
 
   async function loadMore() {
-    pagination.page += 1
-    const { count, books: bookList } = await getBooks(currentSearch, pagination)
+    pagination.startIndex += pagination.maxResults
+    const { totalItems, books: bookList } = await getBooks(currentSearch, pagination)
     setPagination({
       ...pagination,
-      count
+      totalItems
     })
     setBooks([...books, ...bookList])
   }
@@ -57,7 +54,7 @@ function App() {
             </button>
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4">
           {
             books.map((book) => {
               return (
