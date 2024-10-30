@@ -5,3 +5,9 @@ export interface Book {
   categories: string[];
   thumbnail: string;
 }
+
+export interface Pagination {
+  page: number;
+  pageSize: number;
+  count?: number;
+}

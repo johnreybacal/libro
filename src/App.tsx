@@ -1,16 +1,39 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import './App.css'
-import { Book } from './types'
+import { Book, Pagination } from './types'
 import { getBooks } from './client'
 
 function App() {
   const [search, setSearch] = useState<string>("")
+  const [currentSearch, setCurrentSearch] = useState<string>("")
   const [books, setBooks] = useState<Book[]>([])
+  const [pagination, setPagination] = useState<Pagination>({ page: 0, pageSize: 12 })
+  const canLoadMore = useMemo(() => {
+    console.log(pagination, (pagination.page * pagination.pageSize) < (pagination.count ?? 0))
+    return (pagination.page * pagination.pageSize) < (pagination.count ?? 0)
+  }, [pagination])
 
   async function performSearch() {
-    const books = await getBooks(search)
+    setCurrentSearch(search)
+    pagination.page = 0
+    const { count, books } = await getBooks(search, pagination)
+    setPagination({
+      ...pagination,
+      count
+    })
     setBooks(books)
   }
+
+  async function loadMore() {
+    pagination.page += 1
+    const { count, books: bookList } = await getBooks(currentSearch, pagination)
+    setPagination({
+      ...pagination,
+      count
+    })
+    setBooks([...books, ...bookList])
+  }
+
 
   return (
     <div className="card bg-base-100 shadow-xl m-5">
@@ -38,7 +61,7 @@ function App() {
           {
             books.map((book) => {
               return (
-                <div className="card shadow-xl">
+                <div className="card shadow-xl" key={book.id}>
                   <figure style={{ maxHeight: 250, overflow: 'hidden' }}>
                     <img
                       src={book.thumbnail}
@@ -54,6 +77,8 @@ function App() {
               )
             })}
         </div>
+        {canLoadMore ?
+          <button className="btn" onClick={loadMore}>Load more</button> : null}
       </div>
     </div>
   )
