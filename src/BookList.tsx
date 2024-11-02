@@ -14,6 +14,7 @@ function BookList({ books }: {
     <>
       <select
         className="select w-full max-w-xs"
+        value={format}
         onChange={(e) => setFormat(e.target.value as Format)}
       >
         <option value={TABLE}>Table</option>
