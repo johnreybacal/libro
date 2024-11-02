@@ -1,17 +1,17 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import './App.css'
 import { Book, Pagination } from './types'
 import { getBooks } from './client'
 
 function App() {
   const [search, setSearch] = useState<string>("")
-  const [currentSearch, setCurrentSearch] = useState<string>("")
+  const searched = useRef<string>("")
   const [books, setBooks] = useState<Book[]>([])
   const [pagination, setPagination] = useState<Pagination>({ startIndex: 0, maxResults: 12 })
   const canLoadMore = useMemo(() => (pagination.startIndex * pagination.maxResults) < (pagination.totalItems ?? 0), [pagination])
 
   async function performSearch() {
-    setCurrentSearch(search)
+    searched.current = search
     pagination.startIndex = 0
     const { totalItems, books } = await getBooks(search, pagination)
     setPagination({
@@ -23,7 +23,7 @@ function App() {
 
   async function loadMore() {
     pagination.startIndex += pagination.maxResults
-    const { totalItems, books: bookList } = await getBooks(currentSearch, pagination)
+    const { totalItems, books: bookList } = await getBooks(searched.current, pagination)
     setPagination({
       ...pagination,
       totalItems
