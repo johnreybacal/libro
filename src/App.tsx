@@ -1,14 +1,14 @@
-import { useMemo, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import './App.css'
 import { Book, Pagination } from './types'
 import { getBooks } from './client'
+import PaginationButtons from './PaginationButtons'
 
 function App() {
   const [search, setSearch] = useState<string>("")
   const searched = useRef<string>("")
   const [books, setBooks] = useState<Book[]>([])
-  const [pagination, setPagination] = useState<Pagination>({ startIndex: 0, maxResults: 12 })
-  const canLoadMore = useMemo(() => (pagination.startIndex * pagination.maxResults) < (pagination.totalItems ?? 0), [pagination])
+  const [pagination, setPagination] = useState<Pagination>({ startIndex: 0, maxResults: 12, page: 0 })
 
   async function performSearch() {
     searched.current = search
@@ -16,21 +16,23 @@ function App() {
     const { totalItems, books } = await getBooks(search, pagination)
     setPagination({
       ...pagination,
-      totalItems
+      totalItems,
+      page: 0,
+      maxPage: Math.floor(totalItems / pagination.maxResults) - 1
     })
     setBooks(books)
   }
 
-  async function loadMore() {
-    pagination.startIndex += pagination.maxResults
-    const { totalItems, books: bookList } = await getBooks(searched.current, pagination)
+  async function onPageChange(page: number) {
+    pagination.page = page;
+    pagination.startIndex = pagination.maxResults * (page)
+    const { books } = await getBooks(searched.current, pagination)
     setPagination({
-      ...pagination,
-      totalItems
+      ...pagination
     })
-    setBooks([...books, ...bookList])
-  }
 
+    setBooks(books)
+  }
 
   return (
     <div className="card bg-base-100 shadow-xl m-5">
@@ -74,8 +76,10 @@ function App() {
               )
             })}
         </div>
-        {canLoadMore ?
-          <button className="btn" onClick={loadMore}>Load more</button> : null}
+        <PaginationButtons
+          pagination={pagination}
+          onPageChange={onPageChange}>
+        </PaginationButtons>
       </div>
     </div>
   )

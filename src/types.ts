@@ -10,4 +10,6 @@ export interface Pagination {
   startIndex: number;
   maxResults: number;
   totalItems?: number;
+  page: number;
+  maxPage?: number;
 }
