@@ -3,6 +3,7 @@ import './App.css'
 import { Book, Pagination } from './types'
 import { getBooks } from './client'
 import PaginationButtons from './PaginationButtons'
+import BookList from './BookList'
 
 function App() {
   const [search, setSearch] = useState<string>("")
@@ -56,26 +57,12 @@ function App() {
             </button>
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4">
-          {
-            books.map((book) => {
-              return (
-                <div className="card shadow-xl" key={book.id}>
-                  <figure style={{ maxHeight: 250, overflow: 'hidden' }}>
-                    <img
-                      src={book.thumbnail}
-                      alt={book.title}
-                      style={{ width: '100%' }} />
-                  </figure>
-                  <div className="card-body p-4">
-                    <h2 className="card-title">{book.title}</h2>
-                    <p>{book.authors?.join(", ")}</p>
-                    <p>{book.categories?.join(", ")}</p>
-                  </div>
-                </div>
-              )
-            })}
-        </div>
+        {books.length > 0
+          ? <BookList
+            books={books}>
+          </BookList>
+          : searched.current === "" ? <p>Have a book in mind?</p> : <p>No result.</p>
+        }
         <PaginationButtons
           pagination={pagination}
           onPageChange={onPageChange}>
