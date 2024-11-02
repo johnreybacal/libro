@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react'
-import './App.css'
 import { Book, Pagination } from './types'
 import { getBooks } from './client'
 import PaginationButtons from './PaginationButtons'
