@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { Book, Pagination } from './types'
+import { Book, Pagination, ResultFormat } from './types'
 import { getBooks } from './client'
 import PaginationButtons from './PaginationButtons'
 import BookList from './BookList'
@@ -9,6 +9,7 @@ function App() {
   const search = useRef<string>("")
   const [books, setBooks] = useState<Book[]>([])
   const [pagination, setPagination] = useState<Pagination>({ startIndex: 0, maxResults: 12, page: 0 })
+  const [resultFormat, setResultFormat] = useState<ResultFormat>("Grid")
 
   async function onSearch(query: string) {
     if (query === search.current) {
@@ -41,12 +42,15 @@ function App() {
   return (<>
     <NavigationBar
       onSearch={onSearch}
+      resultFormat={resultFormat}
+      onResultFormatChange={setResultFormat}
     />
     <div className="card bg-base-100 shadow-xl m-5">
       <div className="card-body">
         {books.length > 0
           ? <BookList
             books={books}
+            resultFormat={resultFormat}
           />
           : search.current === "" ? <p>Have a book in mind?</p> : <p>No result.</p>
         }

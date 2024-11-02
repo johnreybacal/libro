@@ -13,3 +13,5 @@ export interface Pagination {
   page: number;
   maxPage?: number;
 }
+
+export type ResultFormat = "Table" | "Grid";

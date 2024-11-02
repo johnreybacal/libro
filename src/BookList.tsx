@@ -1,26 +1,12 @@
-import { useState } from "react"
-import { Book } from "./types"
+import { Book, ResultFormat } from "./types"
 
-const TABLE = "Table";
-const GRID = "Grid";
-type Format = typeof TABLE | typeof GRID
-
-function BookList({ books }: {
-  books: Book[]
+function BookList({ books, resultFormat }: {
+  books: Book[],
+  resultFormat: ResultFormat
 }) {
-  const [format, setFormat] = useState<Format>("Grid")
-
   return (
     <>
-      <select
-        className="select w-full max-w-xs"
-        value={format}
-        onChange={(e) => setFormat(e.target.value as Format)}
-      >
-        <option value={TABLE}>Table</option>
-        <option value={GRID}>Grid</option>
-      </select>
-      {format === "Table" &&
+      {resultFormat === "Table" &&
         <table className="table">
           <thead>
             <tr>
@@ -48,7 +34,7 @@ function BookList({ books }: {
           </tbody>
         </table>
       }
-      {format === "Grid" &&
+      {resultFormat === "Grid" &&
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4">
           {books.map((book) => {
             return (
