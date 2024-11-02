@@ -60,25 +60,30 @@ function NavigationBar({ onSearch, onResultFormatChange, resultFormat }: {
         tabIndex={0}
         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
       >
-        <li>Result format</li>
         <li>
-          <select
-            className="select w-full max-w-xs select-sm"
-            value={resultFormat}
-            onChange={(e) => onResultFormatChange(e.target.value as ResultFormat)}
-          >
-            <option value={"Table"}>Table</option>
-            <option value={"Grid"}>Grid</option>
-          </select>
+          <div className="grid-cols-2">
+            Result
+            <select
+              className="select max-w-xs select-sm"
+              value={resultFormat}
+              onChange={(e) => onResultFormatChange(e.target.value as ResultFormat)}
+            >
+              <option value={"Table"}>Table</option>
+              <option value={"Grid"}>Grid</option>
+            </select>
+
+          </div>
         </li>
-        <li>Dark mode</li>
         <li>
-          <input
-            type="checkbox"
-            className="toggle theme-controller"
-            checked={isDarkMode}
-            onChange={() => setIsDarkMode(!isDarkMode)}
-          />
+          <div className="grid-cols-2">
+            Dark mode
+            <input
+              type="checkbox"
+              className="toggle theme-controller"
+              checked={isDarkMode}
+              onChange={() => setIsDarkMode(!isDarkMode)}
+            />
+          </div>
         </li>
       </ul>
     </div>

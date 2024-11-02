@@ -35,7 +35,7 @@ function BookList({ books, resultFormat }: {
         </table>
       }
       {resultFormat === "Grid" &&
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 2xl:grid-cols-6 gap-4">
           {books.map((book) => {
             return (
               <div className="card shadow-xl" key={book.id}>

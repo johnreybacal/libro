@@ -45,22 +45,20 @@ function App() {
       resultFormat={resultFormat}
       onResultFormatChange={setResultFormat}
     />
-    <div className="card bg-base-100 shadow-xl m-5">
-      <div className="card-body">
-        {books.length > 0
-          ? <BookList
-            books={books}
-            resultFormat={resultFormat}
-          />
-          : search.current === "" ? <p>Have a book in mind?</p> : <p>No result.</p>
-        }
-        <div className="m-auto">
-          <PaginationButtons
-            pagination={pagination}
-            onPageChange={onPageChange}
-          />
-        </div>
-      </div>
+    <div className="m-5">
+      {books.length > 0
+        ? <BookList
+          books={books}
+          resultFormat={resultFormat}
+        />
+        : search.current === "" ? <p>Have a book in mind?</p> : <p>No result.</p>
+      }
+    </div>
+    <div className="flex items-center justify-center mb-5">
+      <PaginationButtons
+        pagination={pagination}
+        onPageChange={onPageChange}
+      />
     </div>
   </>)
 }
