@@ -5,7 +5,7 @@ import PaginationButtons from './PaginationButtons'
 import BookList from './BookList'
 import NavigationBar from './NavigationBar'
 
-function App() {
+function Index() {
   const search = useRef<string>("")
   const [books, setBooks] = useState<Book[]>([])
   const [pagination, setPagination] = useState<Pagination>({ startIndex: 0, maxResults: 10, page: 0 })
@@ -77,4 +77,4 @@ function App() {
   </>)
 }
 
-export default App
+export default Index
