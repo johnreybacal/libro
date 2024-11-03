@@ -8,6 +8,7 @@ function PaginationButtons(
 ) {
   function handleClick(page: number) {
     if (page !== pagination.page) {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
       onPageChange(page)
     }
   }

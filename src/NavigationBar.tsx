@@ -14,7 +14,7 @@ function NavigationBar({ onSearch, onResultFormatChange, resultFormat }: {
   }, [isDarkMode]);
 
 
-  return (<div className="navbar bg-base-100">
+  return (<div className="navbar bg-base-100 fixed top-0">
     <div className="navbar-start">
       <a className="btn btn-ghost text-xl">libro</a>
     </div>
