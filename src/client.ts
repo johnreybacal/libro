@@ -22,11 +22,8 @@ export async function getBooks(search: string, pagination: Pagination) {
   const items: Schema$Volume[] = response.data.items;
   const books: Book[] = items.map(({ id, volumeInfo }) => {
     return {
-      id: id ?? "",
-      title: volumeInfo?.title ?? "",
-      authors: volumeInfo?.authors ?? [],
-      categories: volumeInfo?.categories ?? [],
-      thumbnail: volumeInfo?.imageLinks?.thumbnail ?? "",
+      id: id!,
+      ...volumeInfo,
     };
   });
 

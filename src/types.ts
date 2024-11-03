@@ -1,9 +1,9 @@
-export interface Book {
+import { Schema$Volume } from "./types.googlebooksapi";
+
+type VolumeInfo = NonNullable<Schema$Volume["volumeInfo"]>;
+
+export interface Book extends VolumeInfo {
   id: string;
-  title: string;
-  authors: string[];
-  categories: string[];
-  thumbnail: string;
 }
 
 export interface Pagination {

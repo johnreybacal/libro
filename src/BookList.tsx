@@ -13,8 +13,7 @@ function BookList({ books, resultFormat }: {
               <th></th>
               <th>Title</th>
               <th>Authors</th>
-              <th>Categories</th>
-              <th></th>
+              <th>Publication date</th>
             </tr>
           </thead>
           <tbody>
@@ -22,14 +21,14 @@ function BookList({ books, resultFormat }: {
               <td>
                 <div className="mask mask-squircle h-12 w-12">
                   <img
-                    src={book.thumbnail}
+                    src={book.imageLinks?.thumbnail}
                     alt={book.title}
                     style={{ width: '100%' }} />
                 </div>
               </td>
               <td>{book.title}</td>
               <td>{book.authors?.join(", ")}</td>
-              <td>{book.categories?.join(", ")}</td>
+              <td>{book.publishedDate}</td>
             </tr>)}
           </tbody>
         </table>
@@ -41,14 +40,14 @@ function BookList({ books, resultFormat }: {
               <div className="card shadow-xl" key={book.id}>
                 <figure style={{ maxHeight: 250, overflow: 'hidden' }}>
                   <img
-                    src={book.thumbnail}
+                    src={book.imageLinks?.thumbnail}
                     alt={book.title}
                     style={{ width: '100%' }} />
                 </figure>
                 <div className="card-body p-4">
                   <h2 className="card-title">{book.title}</h2>
                   <p>{book.authors?.join(", ")}</p>
-                  <p>{book.categories?.join(", ")}</p>
+                  <p>{book.publishedDate}</p>
                 </div>
               </div>
             )
