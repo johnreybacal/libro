@@ -6,7 +6,24 @@ function BookList({ books, resultFormat }: {
 }) {
   return (
     <>
-      {resultFormat === "Table" &&
+      {resultFormat === "Default" &&
+        <ul role="list" className="divide-y">
+          {books.map((book) => <li className="flex justify-between gap-x-6 py-5">
+            <div className="flex min-w-0 gap-x-4">
+              <img className="flex-none" src={book.imageLinks?.thumbnail} />
+              <div className="min-w-0 flex-auto">
+                <p className="text-sm/6 font-semibold line-clamp-2">{book.title}</p>
+                <p className="mt-1 truncate text-xs/5">{book.authors?.join(", ")}</p>
+                <p className="mt-1 line-clamp-3 text-xs/5">{book.description}</p>
+              </div>
+            </div>
+            <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+              <p className="text-sm/6"><time>{book.publishedDate}</time></p>
+            </div>
+          </li>)}
+        </ul>
+      }
+      {resultFormat === "Compact" &&
         <table className="table">
           <thead>
             <tr>
@@ -21,9 +38,7 @@ function BookList({ books, resultFormat }: {
               <td>
                 <div className="mask mask-squircle h-12 w-12">
                   <img
-                    src={book.imageLinks?.thumbnail}
-                    alt={book.title}
-                    style={{ width: '100%' }} />
+                    src={book.imageLinks?.thumbnail} />
                 </div>
               </td>
               <td>{book.title}</td>
@@ -32,27 +47,6 @@ function BookList({ books, resultFormat }: {
             </tr>)}
           </tbody>
         </table>
-      }
-      {resultFormat === "Grid" &&
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 2xl:grid-cols-6 gap-4">
-          {books.map((book) => {
-            return (
-              <div className="card shadow-xl" key={book.id}>
-                <figure style={{ maxHeight: 250, overflow: 'hidden' }}>
-                  <img
-                    src={book.imageLinks?.thumbnail}
-                    alt={book.title}
-                    style={{ width: '100%' }} />
-                </figure>
-                <div className="card-body p-4">
-                  <h2 className="card-title">{book.title}</h2>
-                  <p>{book.authors?.join(", ")}</p>
-                  <p>{book.publishedDate}</p>
-                </div>
-              </div>
-            )
-          })}
-        </div>
       }
     </>
   )

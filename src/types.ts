@@ -14,4 +14,4 @@ export interface Pagination {
   maxPage?: number;
 }
 
-export type ResultFormat = "Table" | "Grid";
+export type ResultFormat = "Default" | "Compact";

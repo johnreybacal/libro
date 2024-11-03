@@ -9,7 +9,7 @@ function App() {
   const search = useRef<string>("")
   const [books, setBooks] = useState<Book[]>([])
   const [pagination, setPagination] = useState<Pagination>({ startIndex: 0, maxResults: 12, page: 0 })
-  const [resultFormat, setResultFormat] = useState<ResultFormat>("Grid")
+  const [resultFormat, setResultFormat] = useState<ResultFormat>("Default")
 
   async function onSearch(query: string) {
     if (query === search.current) {

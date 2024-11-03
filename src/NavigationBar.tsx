@@ -58,18 +58,18 @@ function NavigationBar({ onSearch, onResultFormatChange, resultFormat }: {
       </div>
       <ul
         tabIndex={0}
-        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-72 p-2 shadow"
       >
         <li>
           <div className="grid-cols-2">
-            Result
+            Result Format
             <select
               className="select max-w-xs select-sm"
               value={resultFormat}
               onChange={(e) => onResultFormatChange(e.target.value as ResultFormat)}
             >
-              <option value={"Table"}>Table</option>
-              <option value={"Grid"}>Grid</option>
+              <option value={"Default"}>Default</option>
+              <option value={"Compact"}>Compact</option>
             </select>
 
           </div>
