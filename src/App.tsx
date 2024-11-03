@@ -45,7 +45,7 @@ function App() {
       resultFormat={resultFormat}
       onResultFormatChange={setResultFormat}
     />
-    <div className="m-5">
+    <div className="m-5 mt-16">
       {books.length > 0
         ? <BookList
           books={books}
