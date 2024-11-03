@@ -12,7 +12,11 @@ function BookList({ books, resultFormat }: {
             <div className="flex min-w-0 gap-x-4">
               <img className="flex-none" src={book.imageLinks?.thumbnail} />
               <div className="min-w-0 flex-auto">
-                <p className="text-sm/6 font-semibold line-clamp-2">{book.title}</p>
+                <a
+                  className="link link-hover text-sm/6 font-semibold line-clamp-2"
+                  href={`/${book.id}`}
+                >
+                  {book.title}</a>
                 <p className="mt-1 truncate text-xs/5">{book.authors?.join(", ")}</p>
                 <p className="mt-1 line-clamp-3 text-xs/5">{book.description}</p>
               </div>
@@ -41,7 +45,12 @@ function BookList({ books, resultFormat }: {
                     src={book.imageLinks?.thumbnail} />
                 </div>
               </td>
-              <td>{book.title}</td>
+              <td><a
+                className="link link-hover text-sm/6 font-semibold line-clamp-2"
+                href={`/${book.id}`}
+              >
+                {book.title}
+              </a></td>
               <td>{book.authors?.join(", ")}</td>
               <td>{book.publishedDate}</td>
             </tr>)}

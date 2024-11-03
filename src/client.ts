@@ -39,3 +39,10 @@ export async function getBooks(search: string, pagination: Pagination) {
     books,
   };
 }
+
+export async function getBook(id: string) {
+  const url = `${GOOGLE_BOOKS_API}${id}`;
+  const response = await axios.get(url);
+
+  return response.data;
+}
