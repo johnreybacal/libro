@@ -11,32 +11,42 @@ function App() {
   const [pagination, setPagination] = useState<Pagination>({ startIndex: 0, maxResults: 10, page: 0 })
   const [resultFormat, setResultFormat] = useState<ResultFormat>("Default")
 
-  async function onSearch(query: string) {
+  function onSearch(query: string) {
     if (query === search.current) {
       return
     }
 
     search.current = query
     pagination.startIndex = 0
-    const { totalItems, books } = await getBooks(query, pagination)
-    setPagination({
-      ...pagination,
-      totalItems,
-      page: 0,
-      maxPage: Math.floor(totalItems / pagination.maxResults) - 1
-    })
-    setBooks(books)
+
+    getBooks(query, pagination)
+      .then(({ totalItems, books }) => {
+        setPagination({
+          ...pagination,
+          totalItems,
+          page: 0,
+          maxPage: Math.floor(totalItems / pagination.maxResults) - 1
+        })
+        setBooks(books)
+      })
+
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  async function onPageChange(page: number) {
+  function onPageChange(page: number) {
     pagination.page = page;
     pagination.startIndex = pagination.maxResults * (page)
-    const { books } = await getBooks(search.current, pagination)
-    setPagination({
-      ...pagination
-    })
 
-    setBooks(books)
+    getBooks(search.current, pagination)
+      .then(({ books }) => {
+        setPagination({
+          ...pagination
+        })
+
+        setBooks(books)
+      })
+
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   return (<>

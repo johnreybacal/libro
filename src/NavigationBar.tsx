@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { ResultFormat } from "./types"
 
 function NavigationBar({ onSearch, onResultFormatChange, resultFormat }: {
-  onSearch: (query: string) => Promise<void>
+  onSearch: (query: string) => void
   onResultFormatChange: (format: ResultFormat) => void,
   resultFormat: ResultFormat
 }) {

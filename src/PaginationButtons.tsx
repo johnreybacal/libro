@@ -3,13 +3,12 @@ import { Pagination } from "./types";
 function PaginationButtons(
   { pagination, onPageChange }: {
     pagination: Pagination,
-    onPageChange: (page: number) => Promise<void>
+    onPageChange: (page: number) => void
   }
 ) {
   function handleClick(page: number) {
     if (page !== pagination.page) {
       onPageChange(page)
-      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }
 
