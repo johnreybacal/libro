@@ -61,7 +61,11 @@ function App() {
           books={books}
           resultFormat={resultFormat}
         />
-        : search.current === "" ? <p>Have a book in mind?</p> : <p>No result.</p>
+        : <div className="flex items-center justify-center pt-20">
+          {search.current === ""
+            ? <p className="text-xl">Have a book in mind?</p>
+            : <p className="text-xl">No result.</p>}
+        </div>
       }
     </div>
     <div className="flex items-center justify-center mb-5">
