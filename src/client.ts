@@ -18,6 +18,13 @@ export async function getBooks(search: string, pagination: Pagination) {
     throw Error(response.data);
   }
 
+  if (!response.data.items) {
+    return {
+      totalItems: 0,
+      books: [],
+    };
+  }
+
   const totalItems: number = response.data.totalItems;
   const items: Schema$Volume[] = response.data.items;
   const books: Book[] = items.map(({ id, volumeInfo }) => {

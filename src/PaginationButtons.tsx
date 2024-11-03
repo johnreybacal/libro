@@ -18,7 +18,6 @@ function PaginationButtons(
     const startPage = Math.max(pagination.page - 2, 0)
     const lastPage = Math.min(startPage + 5, pagination.maxPage)
 
-    console.log(pagination)
     for (let page = startPage; page < lastPage; page++) {
       pages.push(
         <button
