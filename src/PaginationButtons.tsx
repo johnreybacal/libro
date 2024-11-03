@@ -20,6 +20,7 @@ function PaginationButtons(
     for (let page = startPage; page < lastPage; page++) {
       pages.push(
         <button
+          key={page}
           className={"join-item btn" + (
             page === pagination.page ? " btn-active" : ""
           )}
