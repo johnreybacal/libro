@@ -8,7 +8,7 @@ function BookList({ books, resultFormat }: {
     <>
       {resultFormat === "Default" &&
         <ul role="list" className="divide-y">
-          {books.map((book) => <li className="flex justify-between gap-x-6 py-5">
+          {books.map((book) => <li key={book.id} className="flex justify-between gap-x-6 py-5">
             <div className="flex min-w-0 gap-x-4">
               <img className="flex-none" src={book.imageLinks?.thumbnail} />
               <div className="min-w-0 flex-auto">
