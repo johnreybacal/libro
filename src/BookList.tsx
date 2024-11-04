@@ -1,9 +1,11 @@
-import { Book, ResultFormat } from "./types"
+import { useContext } from "react"
+import { Book } from "./types"
+import { GlobalContext } from "./GlobalContext"
 
-function BookList({ books, resultFormat }: {
-  books: Book[],
-  resultFormat: ResultFormat
+function BookList({ books }: {
+  books: Book[]
 }) {
+  const { resultFormat } = useContext(GlobalContext)
   return (
     <>
       {resultFormat === "Default" &&

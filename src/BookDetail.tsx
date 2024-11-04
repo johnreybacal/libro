@@ -11,7 +11,6 @@ function BookDetail() {
     getBook(id!).then(({ volumeInfo }) => {
       setBook(volumeInfo)
     })
-    console.log(id)
   }, [id])
 
   return <p>{book?.title}</p>

@@ -15,3 +15,11 @@ export interface Pagination {
 }
 
 export type ResultFormat = "Default" | "Compact";
+
+export type Theme = "light" | "dark";
+export interface GlobalContextInterface {
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
+  resultFormat: ResultFormat;
+  setResultFormat: (resultFormat: ResultFormat) => void;
+}

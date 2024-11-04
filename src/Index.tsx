@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { Book, Pagination, ResultFormat } from './types'
+import { Book, Pagination } from './types'
 import { getBooks } from './client'
 import PaginationButtons from './PaginationButtons'
 import BookList from './BookList'
@@ -9,7 +9,6 @@ function Index() {
   const search = useRef<string>("")
   const [books, setBooks] = useState<Book[]>([])
   const [pagination, setPagination] = useState<Pagination>({ startIndex: 0, maxResults: 10, page: 0 })
-  const [resultFormat, setResultFormat] = useState<ResultFormat>("Default")
 
   function onSearch(query: string) {
     if (query === search.current) {
@@ -52,14 +51,11 @@ function Index() {
   return (<>
     <NavigationBar
       onSearch={onSearch}
-      resultFormat={resultFormat}
-      onResultFormatChange={setResultFormat}
     />
     <div className="m-5 mt-16">
       {books.length > 0
         ? <BookList
           books={books}
-          resultFormat={resultFormat}
         />
         : <div className="flex items-center justify-center pt-20">
           {search.current === ""

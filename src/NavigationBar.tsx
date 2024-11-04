@@ -1,18 +1,12 @@
-import { useEffect, useState } from "react"
+import { useContext, useState } from "react"
 import { ResultFormat } from "./types"
+import { GlobalContext } from "./GlobalContext"
 
-function NavigationBar({ onSearch, onResultFormatChange, resultFormat }: {
+function NavigationBar({ onSearch }: {
   onSearch: (query: string) => void
-  onResultFormatChange: (format: ResultFormat) => void,
-  resultFormat: ResultFormat
 }) {
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
+  const context = useContext(GlobalContext)
   const [search, setSearch] = useState<string>("")
-
-  useEffect(() => {
-    document.querySelector('html')!.setAttribute('data-theme', isDarkMode ? "dark" : "light");
-  }, [isDarkMode]);
-
 
   return (<div className="navbar bg-base-100 fixed top-0 z-50">
     <div className="navbar-start">
@@ -66,8 +60,8 @@ function NavigationBar({ onSearch, onResultFormatChange, resultFormat }: {
               Result Format
               <select
                 className="select max-w-xs select-sm"
-                value={resultFormat}
-                onChange={(e) => onResultFormatChange(e.target.value as ResultFormat)}
+                value={context.resultFormat}
+                onChange={(e) => context.setResultFormat(e.target.value as ResultFormat)}
               >
                 <option value={"Default"}>Default</option>
                 <option value={"Compact"}>Compact</option>
@@ -81,8 +75,14 @@ function NavigationBar({ onSearch, onResultFormatChange, resultFormat }: {
               <input
                 type="checkbox"
                 className="toggle theme-controller"
-                checked={isDarkMode}
-                onChange={() => setIsDarkMode(!isDarkMode)}
+                checked={context.theme === "dark"}
+                onChange={() => {
+                  if (context.theme === "light") {
+                    context.setTheme("dark")
+                  } else {
+                    context.setTheme("light")
+                  }
+                }}
               />
             </div>
           </li>
