@@ -1,9 +1,17 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Book, Pagination } from './types'
 import { getBooks } from './client'
 import PaginationButtons from './PaginationButtons'
 import BookList from './BookList'
 import NavigationBar from './NavigationBar'
+
+function setQuery(query: Record<string, string>) {
+  const url = new URL(window.location.href);
+  Object.entries(query).forEach((query) => {
+    url.searchParams.set(query[0], query[1]);
+  })
+  window.history.pushState(null, '', url.toString());
+}
 
 function Index() {
   const search = useRef<string>("")
@@ -17,6 +25,11 @@ function Index() {
 
     search.current = query
     pagination.startIndex = 0
+
+    setQuery({
+      "search": query,
+      "page": "1"
+    })
 
     getBooks(query, pagination)
       .then(({ totalItems, books }) => {
@@ -36,10 +49,16 @@ function Index() {
     pagination.page = page;
     pagination.startIndex = pagination.maxResults * (page)
 
+    setQuery({
+      "page": String(page + 1)
+    })
+
     getBooks(search.current, pagination)
-      .then(({ books }) => {
+      .then(({ totalItems, books }) => {
         setPagination({
-          ...pagination
+          ...pagination,
+          totalItems,
+          maxPage: Math.floor(totalItems / pagination.maxResults) - 1
         })
 
         setBooks(books)
@@ -47,6 +66,24 @@ function Index() {
 
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchQuery = urlParams.get("search");
+    const pageQuery = urlParams.get("page")
+
+    if (!searchQuery) {
+      return
+    }
+
+    search.current = searchQuery
+
+    if (pageQuery) {
+      onPageChange(Number(pageQuery) - 1)
+    } else {
+      onPageChange(0)
+    }
+  }, [])
 
   return (<>
     <NavigationBar
