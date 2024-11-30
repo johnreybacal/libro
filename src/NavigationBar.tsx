@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { ResultFormat } from "./types"
 import { GlobalContext } from "./GlobalContext"
 import DarkModeToggle from "./DarkModeToggle"
@@ -8,6 +8,18 @@ function NavigationBar({ onSearch }: {
 }) {
   const context = useContext(GlobalContext)
   const [search, setSearch] = useState<string>("")
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchQuery = urlParams.get("search");
+
+    console.log(searchQuery)
+    if (!searchQuery) {
+      return
+    }
+
+    setSearch(searchQuery)
+  }, [])
 
   return (<div className="navbar bg-base-100 fixed top-0 z-50">
     <div className="navbar-start">
