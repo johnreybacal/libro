@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
+import { createRef, useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Book } from "../types/types";
 import { getBook } from "../lib/client";
 import parse from 'html-react-parser';
 import DarkModeToggle from "../components/DarkModeToggle";
+import BookDetailDialog from "../components/BookDetailDialog";
 
 
 function BookDetail() {
@@ -14,15 +15,40 @@ function BookDetail() {
 
     return image?.extraLarge ?? image?.large ?? image?.medium ?? image?.small ?? image?.thumbnail ?? image?.smallThumbnail
   }, [book])
+  const detailDialog = createRef<HTMLDialogElement>()
+  const [error, setError] = useState()
 
   useEffect(() => {
     getBook(id!).then(({ volumeInfo }) => {
       setBook(volumeInfo)
+    }).catch((reason) => {
+      setError(reason)
     })
   }, [id])
 
   function onBack() {
     history.back()
+  }
+
+  function onDetail() {
+    detailDialog.current?.showModal()
+  }
+
+  if (error) {
+    return <main className="grid min-h-full place-items-center px-6 py-24 sm:py-32 lg:px-8">
+      <div className="text-center">
+        <h1 className="mt-4 text-5xl font-semibold tracking-tight sm:text-7xl">Something's wrong</h1>
+        <p className="mt-6 text-lg font-medium sm:text-xl/8">There's seems to be a problem here.</p>
+        <div className="mt-10 flex items-center justify-center gap-x-6">
+          <a
+            className="btn btn-primary"
+            href={"/"}
+          >
+            Back to home
+          </a>
+        </div>
+      </div>
+    </main>
   }
 
   return <>
@@ -56,7 +82,6 @@ function BookDetail() {
         </div>
       </div>
     </div>
-    {/* <button className="btn float-left">Back</button> */}
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-row">
         <img
@@ -68,12 +93,14 @@ function BookDetail() {
           {book?.subtitle && <p className="py-3">
             {book.subtitle}
           </p>}
-          {book?.description && <div className="py-3">
+          {book?.description && <div className="mt-1 line-clamp-10">
             {parse(book.description)}
           </div>}
+          <button className="mt-10 btn btn-primary" onClick={onDetail}>More information</button>
         </div>
       </div>
     </div>
+    <BookDetailDialog ref={detailDialog} book={book}></BookDetailDialog>
   </>
 }
 
