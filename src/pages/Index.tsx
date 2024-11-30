@@ -5,6 +5,7 @@ import PaginationButtons from '../components/PaginationButtons'
 import BookList from '../components/BookList'
 import NavigationBar from '../components/NavigationBar'
 import Loading from '../components/Loading'
+import ErrorPage from './ErrorPage'
 
 function setQuery(query: Record<string, string>) {
   const url = new URL(window.location.href);
@@ -19,6 +20,7 @@ function Index() {
   const [books, setBooks] = useState<Book[]>([])
   const [pagination, setPagination] = useState<Pagination>({ startIndex: 0, maxResults: 10, page: 0 })
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState()
 
   function onSearch(query: string) {
     if (query === search.current) {
@@ -43,6 +45,8 @@ function Index() {
           maxPage: Math.floor(totalItems / pagination.maxResults) - 1
         })
         setBooks(books)
+      }).catch((reason) => {
+        setError(reason)
       }).finally(() => setIsLoading(false))
   }
 
@@ -64,6 +68,8 @@ function Index() {
         })
 
         setBooks(books)
+      }).catch((reason) => {
+        setError(reason)
       }).finally(() => setIsLoading(false))
 
   }
@@ -85,6 +91,10 @@ function Index() {
       onPageChange(0)
     }
   }, [])
+
+  if (error) {
+    return <ErrorPage></ErrorPage>
+  }
 
   return (<>
     <NavigationBar
