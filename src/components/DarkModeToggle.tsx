@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { GlobalContext } from "./GlobalContext"
+import { GlobalContext } from "../lib/GlobalContext"
 
 function DarkModeToggle() {
   const context = useContext(GlobalContext)

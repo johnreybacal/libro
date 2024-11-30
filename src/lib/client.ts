@@ -1,6 +1,6 @@
 import axios from "axios";
-import { Book, Pagination } from "./types";
-import { Schema$Volume } from "./types.googlebooksapi";
+import { Book, Pagination } from "../types/types";
+import { Schema$Volume } from "../types/types.googlebooksapi";
 
 const GOOGLE_BOOKS_API = "https://www.googleapis.com/books/v1/volumes/";
 

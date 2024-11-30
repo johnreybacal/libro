@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
-import { ResultFormat } from "./types"
-import { GlobalContext } from "./GlobalContext"
+import { ResultFormat } from "../types/types"
+import { GlobalContext } from "../lib/GlobalContext"
 import DarkModeToggle from "./DarkModeToggle"
 
 function NavigationBar({ onSearch }: {

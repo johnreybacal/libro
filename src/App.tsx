@@ -1,11 +1,11 @@
-import Index from './Index.tsx'
+import Index from './pages/Index.tsx'
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import BookDetail from './BookDetail.tsx';
-import { GlobalContext } from './GlobalContext.ts';
-import { ResultFormat, Theme } from './types.ts';
+import BookDetail from './pages/BookDetail.tsx';
+import { GlobalContext } from './lib/GlobalContext.ts';
+import { ResultFormat, Theme } from './types/types.ts';
 import { useEffect, useState } from 'react';
 
 const router = createBrowserRouter([
