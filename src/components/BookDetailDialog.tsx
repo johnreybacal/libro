@@ -1,5 +1,6 @@
 import { createRef } from "react"
 import { Book } from "../types/types"
+import parse from 'html-react-parser';
 
 function BookDetailDialog({
   book
@@ -15,10 +16,14 @@ function BookDetailDialog({
   return <>
     <button className="mt-10 btn btn-primary" onClick={showModal}>More information</button>
     <dialog ref={ref} className="modal modal-bottom sm:modal-middle">
-
-      <div className="modal-box">
+      <div className="modal-box !max-w-5xl">
         <h3 className="font-bold text-lg">{book?.title}</h3>
-        <p className="py-4">{book?.subtitle}</p>
+        {book?.subtitle && <p className="py-3">
+          {book.subtitle}
+        </p>}
+        {book?.description && <div className="mt-1 line-clamp-10">
+          {parse(book.description)}
+        </div>}
         <div className="modal-action">
           <form method="dialog">
             <button className="btn">Close</button>
