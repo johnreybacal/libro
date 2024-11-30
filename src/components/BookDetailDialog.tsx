@@ -24,6 +24,10 @@ function BookDetailDialog({
         {book?.description && <div className="mt-1 line-clamp-10">
           {parse(book.description)}
         </div>}
+
+        <div className="divider mt-10">Work in progress :)</div>
+        <progress className="progress w-full"></progress>
+
         <div className="modal-action">
           <form method="dialog">
             <button className="btn">Close</button>
