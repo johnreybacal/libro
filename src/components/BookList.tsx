@@ -1,7 +1,6 @@
 import { useContext } from "react"
 import { Book } from "../types/types"
 import { GlobalContext } from "../lib/GlobalContext"
-import Loading from "./Loading"
 
 function BookList({ books }: {
   books: Book[],

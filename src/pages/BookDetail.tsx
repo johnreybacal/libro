@@ -1,4 +1,4 @@
-import { createRef, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Book } from "../types/types";
 import { getBook } from "../lib/client";
@@ -16,7 +16,6 @@ function BookDetail() {
 
     return image?.extraLarge ?? image?.large ?? image?.medium ?? image?.small ?? image?.thumbnail ?? image?.smallThumbnail
   }, [book])
-  const detailDialog = createRef<HTMLDialogElement>()
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState()
 
@@ -31,10 +30,6 @@ function BookDetail() {
 
   function onBack() {
     history.back()
-  }
-
-  function onDetail() {
-    detailDialog.current?.showModal()
   }
 
   if (isLoading) {
@@ -103,11 +98,10 @@ function BookDetail() {
           {book?.description && <div className="mt-1 line-clamp-10">
             {parse(book.description)}
           </div>}
-          <button className="mt-10 btn btn-primary" onClick={onDetail}>More information</button>
+          <BookDetailDialog book={book}></BookDetailDialog>
         </div>
       </div>
     </div>
-    <BookDetailDialog ref={detailDialog} book={book}></BookDetailDialog>
   </>
 }
 
