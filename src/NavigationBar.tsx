@@ -1,6 +1,7 @@
 import { useContext, useState } from "react"
 import { ResultFormat } from "./types"
 import { GlobalContext } from "./GlobalContext"
+import DarkModeToggle from "./DarkModeToggle"
 
 function NavigationBar({ onSearch }: {
   onSearch: (query: string) => void
@@ -53,7 +54,7 @@ function NavigationBar({ onSearch }: {
         </div>
         <ul
           tabIndex={0}
-          className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-72 p-2 shadow"
+          className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-64 p-2 shadow"
         >
           <li>
             <div className="grid-cols-2">
@@ -70,21 +71,7 @@ function NavigationBar({ onSearch }: {
             </div>
           </li>
           <li>
-            <div className="grid-cols-2">
-              Dark mode
-              <input
-                type="checkbox"
-                className="toggle theme-controller"
-                checked={context.theme === "dark"}
-                onChange={() => {
-                  if (context.theme === "light") {
-                    context.setTheme("dark")
-                  } else {
-                    context.setTheme("light")
-                  }
-                }}
-              />
-            </div>
+            <DarkModeToggle></DarkModeToggle>
           </li>
         </ul>
       </div>
