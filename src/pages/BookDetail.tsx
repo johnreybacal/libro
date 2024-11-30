@@ -95,7 +95,13 @@ function BookDetail() {
           {book?.subtitle && <p className="py-3">
             {book.subtitle}
           </p>}
-          {book?.description && <div className="mt-1 line-clamp-10">
+          {book?.description && <div style={{
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            display: "-webkit-box",
+            WebkitLineClamp: 10,
+            WebkitBoxOrient: "vertical"
+          }}>
             {parse(book.description)}
           </div>}
           <BookDetailDialog book={book}></BookDetailDialog>
