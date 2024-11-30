@@ -68,9 +68,9 @@ function BookDetail() {
           {book?.subtitle && <p className="py-3">
             {book.subtitle}
           </p>}
-          {book?.description && <p className="py-3">
+          {book?.description && <div className="py-3">
             {parse(book.description)}
-          </p>}
+          </div>}
         </div>
       </div>
     </div>
