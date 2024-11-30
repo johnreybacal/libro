@@ -1,10 +1,11 @@
-import { createRef, useEffect, useMemo, useRef, useState } from "react";
+import { createRef, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Book } from "../types/types";
 import { getBook } from "../lib/client";
 import parse from 'html-react-parser';
 import DarkModeToggle from "../components/DarkModeToggle";
 import BookDetailDialog from "../components/BookDetailDialog";
+import Loading from "../components/Loading";
 
 
 function BookDetail() {
@@ -16,14 +17,16 @@ function BookDetail() {
     return image?.extraLarge ?? image?.large ?? image?.medium ?? image?.small ?? image?.thumbnail ?? image?.smallThumbnail
   }, [book])
   const detailDialog = createRef<HTMLDialogElement>()
+  const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState()
 
   useEffect(() => {
+    setIsLoading(true)
     getBook(id!).then(({ volumeInfo }) => {
       setBook(volumeInfo)
     }).catch((reason) => {
       setError(reason)
-    })
+    }).finally(() => setIsLoading(false))
   }, [id])
 
   function onBack() {
@@ -32,6 +35,10 @@ function BookDetail() {
 
   function onDetail() {
     detailDialog.current?.showModal()
+  }
+
+  if (isLoading) {
+    return <Loading></Loading>
   }
 
   if (error) {

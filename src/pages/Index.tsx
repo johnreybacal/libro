@@ -17,6 +17,7 @@ function Index() {
   const search = useRef<string>("")
   const [books, setBooks] = useState<Book[]>([])
   const [pagination, setPagination] = useState<Pagination>({ startIndex: 0, maxResults: 10, page: 0 })
+  const [isLoading, setIsLoading] = useState(false)
 
   function onSearch(query: string) {
     if (query === search.current) {
@@ -31,6 +32,7 @@ function Index() {
       "page": "1"
     })
 
+    setIsLoading(true)
     getBooks(query, pagination)
       .then(({ totalItems, books }) => {
         setPagination({
@@ -40,9 +42,9 @@ function Index() {
           maxPage: Math.floor(totalItems / pagination.maxResults) - 1
         })
         setBooks(books)
-      })
+      }).finally(() => setIsLoading(false))
 
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    window.scrollTo({ top: 0, behavior: 'instant' })
   }
 
   function onPageChange(page: number) {
@@ -53,6 +55,7 @@ function Index() {
       "page": String(page + 1)
     })
 
+    setIsLoading(true)
     getBooks(search.current, pagination)
       .then(({ totalItems, books }) => {
         setPagination({
@@ -62,9 +65,9 @@ function Index() {
         })
 
         setBooks(books)
-      })
+      }).finally(() => setIsLoading(false))
 
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    window.scrollTo({ top: 0, behavior: 'instant' })
   }
 
   useEffect(() => {
@@ -93,6 +96,7 @@ function Index() {
       {books.length > 0
         ? <BookList
           books={books}
+          isLoading={isLoading}
         />
         : <div className="flex items-center justify-center pt-20">
           {search.current === ""

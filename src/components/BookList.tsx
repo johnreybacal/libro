@@ -1,11 +1,18 @@
 import { useContext } from "react"
 import { Book } from "../types/types"
 import { GlobalContext } from "../lib/GlobalContext"
+import Loading from "./Loading"
 
-function BookList({ books }: {
-  books: Book[]
+function BookList({ books, isLoading = true }: {
+  books: Book[],
+  isLoading: boolean
 }) {
   const { resultFormat } = useContext(GlobalContext)
+
+  if (isLoading) {
+    return <Loading></Loading>
+  }
+
   return (
     <>
       {resultFormat === "Default" &&
