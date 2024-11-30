@@ -3,15 +3,10 @@ import { Book } from "../types/types"
 import { GlobalContext } from "../lib/GlobalContext"
 import Loading from "./Loading"
 
-function BookList({ books, isLoading = true }: {
+function BookList({ books }: {
   books: Book[],
-  isLoading: boolean
 }) {
   const { resultFormat } = useContext(GlobalContext)
-
-  if (isLoading) {
-    return <Loading></Loading>
-  }
 
   return (
     <>

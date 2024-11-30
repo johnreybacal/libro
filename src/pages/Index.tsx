@@ -4,6 +4,7 @@ import { getBooks } from '../lib/client'
 import PaginationButtons from '../components/PaginationButtons'
 import BookList from '../components/BookList'
 import NavigationBar from '../components/NavigationBar'
+import Loading from '../components/Loading'
 
 function setQuery(query: Record<string, string>) {
   const url = new URL(window.location.href);
@@ -43,8 +44,6 @@ function Index() {
         })
         setBooks(books)
       }).finally(() => setIsLoading(false))
-
-    window.scrollTo({ top: 0, behavior: 'instant' })
   }
 
   function onPageChange(page: number) {
@@ -67,7 +66,6 @@ function Index() {
         setBooks(books)
       }).finally(() => setIsLoading(false))
 
-    window.scrollTo({ top: 0, behavior: 'instant' })
   }
 
   useEffect(() => {
@@ -92,25 +90,26 @@ function Index() {
     <NavigationBar
       onSearch={onSearch}
     />
-    <div className="m-5 mt-16">
-      {books.length > 0
-        ? <BookList
-          books={books}
-          isLoading={isLoading}
+    {isLoading ? <Loading></Loading> : <>
+      <div className="m-5 mt-16">
+        {books.length > 0
+          ? <BookList
+            books={books}
+          />
+          : <div className="flex items-center justify-center pt-20">
+            {search.current === ""
+              ? <p className="text-xl">Have a book in mind?</p>
+              : <p className="text-xl">No result.</p>}
+          </div>
+        }
+      </div>
+      <div className="flex items-center justify-center mb-5">
+        <PaginationButtons
+          pagination={pagination}
+          onPageChange={onPageChange}
         />
-        : <div className="flex items-center justify-center pt-20">
-          {search.current === ""
-            ? <p className="text-xl">Have a book in mind?</p>
-            : <p className="text-xl">No result.</p>}
-        </div>
-      }
-    </div>
-    <div className="flex items-center justify-center mb-5">
-      <PaginationButtons
-        pagination={pagination}
-        onPageChange={onPageChange}
-      />
-    </div>
+      </div>
+    </>}
   </>)
 }
 
