@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Book } from "../types/types";
+import { Book } from "../types";
 import { getBook } from "../lib/client";
 import parse from 'html-react-parser';
 import DarkModeToggle from "../components/DarkModeToggle";

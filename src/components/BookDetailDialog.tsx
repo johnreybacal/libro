@@ -1,5 +1,5 @@
 import { createRef } from "react"
-import { Book } from "../types/types"
+import { Book } from "../types"
 import parse from 'html-react-parser';
 
 function BookDetailDialog({

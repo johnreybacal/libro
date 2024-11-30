@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Book, Pagination } from '../types/types'
+import { Book, Pagination } from '../types'
 import { getBooks } from '../lib/client'
 import PaginationButtons from '../components/PaginationButtons'
 import BookList from '../components/BookList'

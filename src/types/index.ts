@@ -1,4 +1,4 @@
-import { Schema$Volume } from "./types.googlebooksapi";
+import { Schema$Volume } from "./googlebooksapi";
 
 type VolumeInfo = NonNullable<Schema$Volume["volumeInfo"]>;
 

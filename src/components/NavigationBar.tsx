@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react"
-import { ResultFormat } from "../types/types"
+import { ResultFormat } from "../types"
 import { GlobalContext } from "../lib/GlobalContext"
 import DarkModeToggle from "./DarkModeToggle"
 

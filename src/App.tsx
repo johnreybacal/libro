@@ -5,7 +5,7 @@ import {
 } from "react-router-dom";
 import BookDetail from './pages/BookDetail.tsx';
 import { GlobalContext } from './lib/GlobalContext.ts';
-import { ResultFormat, Theme } from './types/types.ts';
+import { ResultFormat, Theme } from './types';
 import { useEffect, useState } from 'react';
 
 const router = createBrowserRouter([

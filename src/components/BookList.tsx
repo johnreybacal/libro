@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { Book } from "../types/types"
+import { Book } from "../types"
 import { GlobalContext } from "../lib/GlobalContext"
 
 function BookList({ books }: {
