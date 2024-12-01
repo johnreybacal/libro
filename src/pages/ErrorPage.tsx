@@ -18,7 +18,7 @@ function ErrorPage() {
         </button>
         <a
           className="btn btn-primary btn-outline w-32"
-          href={"/"}
+          href={import.meta.env.BASE_URL}
           onMouseEnter={() => setIsCountryRoads(true)}
           onMouseLeave={() => setIsCountryRoads(false)}
         >
