@@ -2,12 +2,6 @@ import { useContext } from "react"
 import { Book } from "../types"
 import { GlobalContext } from "../lib/GlobalContext"
 
-/** Workaround with https://github.com/rafgraph/spa-github-pages
- * 
- * `?` gets placed at the front redirecting to my profile GH pages
- */
-const DETAIL_URL = `${import.meta.env.BASE_URL}/?`
-
 function BookList({ books }: {
   books: Book[],
 }) {
@@ -23,7 +17,7 @@ function BookList({ books }: {
               <div className="min-w-0 flex-auto">
                 <a
                   className="link link-hover text-sm/6 font-semibold line-clamp-2"
-                  href={`${DETAIL_URL}/${book.id}`}
+                  href={`${import.meta.env.BASE_URL}/${book.id}`}
                 >
                   {book.title}</a>
                 <p className="mt-1 truncate text-xs/5">{book.authors?.join(", ")}</p>
@@ -56,7 +50,7 @@ function BookList({ books }: {
               </td>
               <td><a
                 className="link link-hover text-sm/6 font-semibold line-clamp-2"
-                href={`${DETAIL_URL}/${book.id}`}
+                href={`${import.meta.env.BASE_URL}/${book.id}`}
               >
                 {book.title}
               </a></td>
