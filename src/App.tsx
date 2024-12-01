@@ -8,16 +8,21 @@ import { GlobalContext } from './lib/GlobalContext.ts';
 import { ResultFormat, Theme } from './types';
 import { useEffect, useState } from 'react';
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <Index />,
+    },
+    {
+      path: "/:id",
+      element: <BookDetail />
+    }
+  ],
   {
-    path: "/",
-    element: <Index />,
-  },
-  {
-    path: "/:id",
-    element: <BookDetail />
+    basename: import.meta.env.BASE_URL
   }
-]);
+);
 
 function App() {
   const savedTheme = localStorage.getItem("theme") as Theme ?? "light"
