@@ -42,7 +42,7 @@ function BookDetail() {
   }
 
   return <>
-    <div className="navbar fixed top-0 z-50">
+    <div className="navbar bg-base-100 fixed top-0 z-50">
       <div className="navbar-start">
         <a className="btn btn-ghost" onClick={onBack}>Back to list</a>
       </div>
@@ -72,11 +72,11 @@ function BookDetail() {
         </div>
       </div>
     </div>
-    <div className="hero bg-base-200 min-h-screen">
+    <div className="hero min-h-screen mt-16">
       <div className="hero-content flex-col lg:flex-row">
         <img
           src={image}
-          className="max-w-sm rounded-lg shadow-2xl w-200" />
+          className="rounded-lg shadow-2xl max-w-md" />
         <div>
           <h1 className="text-5xl font-bold">{book?.title}</h1>
           {book?.authors && <p className="py-3">Written by {book.authors.join(", ")}</p>}

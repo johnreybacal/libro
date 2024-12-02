@@ -23,10 +23,10 @@ function NavigationBar({ onSearch }: {
 
   return (<div className="navbar bg-base-100 fixed top-0 z-50">
     <div className="navbar-start">
-      <a className="btn btn-ghost text-xl">libro</a>
+      <a className="hidden sm:inline-flex btn btn-ghost text-xl">libro</a>
     </div>
-    <div className="navbar-center">
-      <label className="input input-bordered flex w-72 items-center gap-2">
+    <div className="xs:navbar-start md:navbar-center mx-2.5">
+      <label className="input input-bordered flex items-center gap-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 16 16"
