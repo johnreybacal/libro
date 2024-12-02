@@ -43,8 +43,9 @@ function NavigationBar({ onSearch }: {
           placeholder="Search" value={search}
           onChange={(event) => setSearch(event.target.value)}
           onKeyDown={(event) => {
-            if (event.key === "Enter") {
-              onSearch(search)
+            const query = search.trim()
+            if (event.key === "Enter" && query) {
+              onSearch(query)
             }
           }} />
       </label>
