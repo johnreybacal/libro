@@ -90,6 +90,8 @@ function Index() {
     } else {
       onPageChange(0)
     }
+    // Execute only on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (error) {
